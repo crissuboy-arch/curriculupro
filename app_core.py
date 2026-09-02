@@ -22,6 +22,7 @@ from config import (
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 
 try:
@@ -97,12 +98,7 @@ def _load_skills():
 def _build_registry(skills=None):
     if skills is None:
         skills = {}
-    default_key = os.getenv("NVIDIA_API_KEY")
-    if not default_key:
-        raise RuntimeError(
-            "NVIDIA_API_KEY nao encontrada. Local: confira o .env. "
-            "Na Vercel: importe o .env.vercel em Project Settings -> Environment Variables."
-        )
+    default_key = os.getenv("NVIDIA_API_KEY", "")
     registry = {
         "meta/llama-3.1-70b-instruct": {
             "label": "Llama 3.1 70B",
@@ -185,6 +181,11 @@ def create_app():
     def client_for(model_id):
         entry = model_registry.get(model_id)
         key = entry["api_key"] if entry else default_key
+        if not key:
+            raise HTTPException(
+                status_code=503,
+                detail="NVIDIA_API_KEY nao configurada. Adicione a variavel de ambiente no Vercel: Settings > Environment Variables."
+            )
         params = entry["params"] if entry else {"temperature": 0.7, "top_p": 0.95, "max_tokens": 4096}
         if key not in clients:
             clients[key] = OpenAI(base_url=BASE_URL, api_key=key, timeout=REQUEST_TIMEOUT)
@@ -571,6 +572,9 @@ def create_app():
     app = FastAPI()
     static_dir = ROOT / "static"
 
+    if static_dir.is_dir():
+        app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+
     @app.get("/")
     def index():
         return FileResponse(static_dir / "index.html")
@@ -642,6 +646,8 @@ def create_app():
 
         system_prompt = SYSTEM_PROMPTS.get("image", "Analise esta imagem.")
         vision_key = os.getenv("NVIDIA_API_KEY_VISION", default_key)
+        if not vision_key:
+            raise HTTPException(503, "NVIDIA_API_KEY nao configurada. Adicione a variavel de ambiente no Vercel.")
         vision_client = OpenAI(base_url=BASE_URL, api_key=vision_key, timeout=REQUEST_TIMEOUT)
         vision_model = APP_MODELS.get("vision", "meta/llama-3.2-90b-vision-instruct")
 
@@ -711,6 +717,8 @@ def create_app():
             raise HTTPException(400, "Upload de screenshot nao disponivel para este aplicativo.")
 
         vision_key = os.getenv("NVIDIA_API_KEY_VISION", default_key)
+        if not vision_key:
+            raise HTTPException(503, "NVIDIA_API_KEY nao configurada. Adicione a variavel de ambiente no Vercel.")
         vision_client = OpenAI(base_url=BASE_URL, api_key=vision_key, timeout=REQUEST_TIMEOUT)
         vision_model = APP_MODELS.get("vision", "meta/llama-3.2-90b-vision-instruct")
 
@@ -764,6 +772,8 @@ def create_app():
         body = await request.json()
         text = body.get("input", body.get("text", ""))
         model = body.get("model", "nvidia/nv-embedqa-e5-v5")
+        if not default_key:
+            raise HTTPException(503, "NVIDIA_API_KEY nao configurada.")
         client_obj = OpenAI(base_url=BASE_URL, api_key=default_key, timeout=REQUEST_TIMEOUT)
         try:
             start = time.monotonic()

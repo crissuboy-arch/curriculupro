@@ -571,9 +571,12 @@ def create_app():
 
     app = FastAPI()
     static_dir = ROOT / "static"
+    public_dir = ROOT / "public"
 
     if static_dir.is_dir():
         app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+    if public_dir.is_dir():
+        app.mount("/static", StaticFiles(directory=str(public_dir)), name="public-static")
 
     @app.get("/")
     def index():

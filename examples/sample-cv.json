@@ -1,0 +1,127 @@
+{
+  "personal": {
+    "name": "Maria Silva Santos",
+    "email": "maria.santos@email.com",
+    "phone": "+351 912 345 678",
+    "location": "Lisboa",
+    "country": "Portugal",
+    "nationality": "Portuguesa",
+    "birth_date": "15/03/1990",
+    "linkedin": "linkedin.com/in/mariasilva",
+    "portfolio": ""
+  },
+  "summary": "Profissional com 8 anos de experiencia em gestao de projetos digitais. Especialista em metodologias agil e transformacao digital. Lideranca de equipas multifuncionais e entrega de projetos com orcamento ate 500K EUR.",
+  "experience": [
+    {
+      "role": "Project Manager Senior",
+      "company": "Tech Solutions Lda",
+      "period": "2021 - Presente",
+      "responsibilities": [
+        "Lideranca de equipa de 12 pessoas",
+        "Gestao de orcamento anual de 450K EUR",
+        "Implementacao de metodologia Scrum",
+        "Coordenacao com stakeholders internacionais"
+      ],
+      "results": [
+        "Reducao de 30% no time-to-market",
+        "Aumento de 25% na satisfacao do cliente",
+        "Certificacao da equipa em PSM I"
+      ]
+    },
+    {
+      "role": "Project Manager",
+      "company": "Digital Agency SA",
+      "period": "2018 - 2021",
+      "responsibilities": [
+        "Gestao de projetos web e mobile",
+        "Acompanhamento de fornecedores",
+        "Relatorios de progresso para direcao"
+      ],
+      "results": [
+        "Entrega de 25 projetos no prazo",
+        "Reducao de 15% nos custos operacionais"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Mestrado em Gestao de Projetos",
+      "institution": "Universidade de Lisboa",
+      "period": "2016 - 2018",
+      "details": "Tese: Aplicacao de Scrum em Projets de Transformacao Digital"
+    },
+    {
+      "degree": "Licenciatura em Administracao e Gestao",
+      "institution": "ISCTE - Instituto Universitario de Lisboa",
+      "period": "2012 - 2016",
+      "details": ""
+    }
+  ],
+  "skills": {
+    "technical": [
+      "Jira",
+      "Confluence",
+      "Trello",
+      "MS Project",
+      "Excel Avancado",
+      "SQL Basico",
+      "Figma",
+      "Slack"
+    ],
+    "personal": [
+      "Lideranca",
+      "Comunicacao",
+      "Resolucao de problemas",
+      "Trabalho em equipa",
+      "Pensamento critico",
+      "Gestao de tempo"
+    ]
+  },
+  "languages": [
+    {
+      "language": "Portugues",
+      "level": "Nativo"
+    },
+    {
+      "language": "Ingles",
+      "level": "Avancado (C1)"
+    },
+    {
+      "language": "Espanhol",
+      "level": "Intermedio (B1)"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Professional Scrum Master I (PSM I)",
+      "issuer": "Scrum.org",
+      "date": "2020",
+      "validity": "Vitalicia",
+      "credential": "PSM-I-12345"
+    },
+    {
+      "name": "Project Management Professional (PMP)",
+      "issuer": "PMI",
+      "date": "2021",
+      "validity": "2024-2027",
+      "credential": ""
+    }
+  ],
+  "driving_license": {
+    "has_license": true,
+    "categories": ["B", "BE"],
+    "own_vehicle": true
+  },
+  "availability": {
+    "immediate": true,
+    "shifts": false,
+    "weekends": false,
+    "travel": true,
+    "relocation": true
+  },
+  "work_authorization": {
+    "authorized": "sim",
+    "permit_type": "Ciudadao da Uniao Europeia"
+  },
+  "target_job": "Head of Digital Projects"
+}

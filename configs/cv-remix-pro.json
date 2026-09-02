@@ -1,0 +1,187 @@
+{
+  "app_id": "cv-remix-pro",
+  "branding": {
+    "app_name": "CV Remix PRO",
+    "short_name": "CV PRO",
+    "logo_text": "ForgeHub AI",
+    "tagline": "ForgeHub AI",
+    "company": "ForgeHub AI",
+    "copyright": "ForgeHub AI",
+    "support_email": "suporte@forgehub.ai",
+    "site": "https://forgehub.ai",
+    "plan_name": "Professional",
+    "plan_badge": "PRO",
+    "favicon_emoji": "\uD83D\uDCC4",
+    "assistant_name": "CV Remix AI"
+  },
+  "colors": {
+    "primary": "#2563EB",
+    "secondary": "#1D4ED8",
+    "accent": "#3B82F6",
+    "gold": "#F6C453",
+    "bg_deep": "#08142E",
+    "bg": "#0B1E3C",
+    "bg_mid": "#0F2447",
+    "bg_light": "#1A3359"
+  },
+  "models": {
+    "default": "meta/llama-3.1-70b-instruct",
+    "vision": "meta/llama-3.2-90b-vision-instruct",
+    "expert_underlying": "meta/llama-3.1-70b-instruct"
+  },
+  "skill": "cv-remix-pro.md",
+  "expert_name": "CV Remix Expert",
+  "hero": {
+    "title": "Transforme qualquer curr\u00edculo em uma vers\u00e3o profissional",
+    "highlight": "pronta para enviar",
+    "subtitle": "Envie seu curr\u00edculo, escolha o idioma e a vaga desejada. A IA reorganiza, melhora e adapta o conte\u00fado sem inventar experi\u00eancias que voc\u00ea nunca teve.",
+    "floats": [
+      {"label": "Templates", "value": "3+", "color": "gold"},
+      {"label": "Idiomas", "value": "6", "color": "green"},
+      {"label": "ATS Score", "value": "Otimizado"},
+      {"label": "Export", "value": "PDF + DOCX", "color": "green"},
+      {"label": "CV Remix", "value": "", "big": true, "icon": "\uD83D\uDCC4"},
+      {"label": "IA", "value": "8 ferramentas"}
+    ]
+  },
+  "dashboard_metrics": [
+    {"label": "Templates", "value": "3", "color": "gold", "trend": "up", "trend_value": "novo"},
+    {"label": "Idiomas", "value": "6", "trend": "up", "trend_value": "PT EN ES FR DE IT"},
+    {"label": "Ferramentas IA", "value": "8", "color": "green", "trend": "up", "trend_value": "ativas"},
+    {"label": "Export", "value": "2", "trend": "up", "trend_value": "PDF DOCX"},
+    {"label": "ATS", "value": "OK", "color": "green"},
+    {"label": "Privacidade", "value": "Local", "color": "green"}
+  ],
+  "sidebar": {
+    "categories": [
+      {"label": "Menu", "key": "menu"},
+      {"label": "Criar", "key": "criar"},
+      {"label": "Importar", "key": "importar"},
+      {"label": "Melhorar", "key": "melhorar"},
+      {"label": "Traduzir", "key": "traduzir"},
+      {"label": "Adaptar", "key": "adaptar"},
+      {"label": "Exportar", "key": "exportar"}
+    ],
+    "items": {
+      "menu": [
+        {"id": "dashboard", "label": "Dashboard", "icon": "\uD83D\uDCCA"},
+        {"id": "editor-cv", "label": "Editor de Curr\u00edculo", "icon": "\u270D\uFE0F"}
+      ],
+      "criar": [
+        {"id": "criar-do-zero", "label": "Criar do Zero", "icon": "\uD83D\uDD22"}
+      ],
+      "importar": [
+        {"id": "import-pdf", "label": "Importar PDF", "icon": "\uD83D\uDCC4"},
+        {"id": "import-docx", "label": "Importar DOCX", "icon": "\uD83D\uDCC3"},
+        {"id": "import-txt", "label": "Importar TXT", "icon": "\uD83D\uDCDD"}
+      ],
+      "melhorar": [
+        {"id": "melhorar-resumo", "label": "Melhorar Resumo", "icon": "\u2728"},
+        {"id": "melhorar-experiencia", "label": "Melhorar Experi\u00eancia", "icon": "\uD83D\uDCC8"},
+        {"id": "corrigir-gramatica", "label": "Corrigir Gram\u00e1tica", "icon": "\uD83D\uDD24"},
+        {"id": "tornar-profissional", "label": "Tornar Profissional", "icon": "\uD83C\uDFC6"},
+        {"id": "resumir", "label": "Resumir", "icon": "\u2796"},
+        {"id": "expandir", "label": "Expandir", "icon": "\u2795"},
+        {"id": "otimizar-ats", "label": "Otimizar para ATS", "icon": "\uD83D\uDD0D"}
+      ],
+      "traduzir": [
+        {"id": "traduzir-pt", "label": "Traduzir para EN", "icon": "\uD83C\uDDEC\uD83C\uDDE7"},
+        {"id": "traduzir-es", "label": "Traduzir para ES", "icon": "\uD83C\uDDEA\uD83C\uDDF8"},
+        {"id": "traduzir-fr", "label": "Traduzir para FR", "icon": "\uD83C\uDDEB\uD83C\uDDF7"},
+        {"id": "traduzir-de", "label": "Traduzir para DE", "icon": "\uD83C\uDDE9\uD83C\uDDEA"},
+        {"id": "traduzir-it", "label": "Traduzir para IT", "icon": "\uD83C\uDDEE\uD83C\uDDF9"}
+      ],
+      "adaptar": [
+        {"id": "adaptar-vaga", "label": "Adaptar para Vaga", "icon": "\uD83C\uDFE2"}
+      ],
+      "exportar": [
+        {"id": "export-pdf", "label": "Exportar PDF", "icon": "\uD83D\uDCC4"},
+        {"id": "export-docx", "label": "Exportar DOCX", "icon": "\uD83D\uDCC3"}
+      ]
+    }
+  },
+  "tools": [
+    {"id": "criar-do-zero", "icon": "\uD83D\uDD22", "label": "Criar do Zero", "desc": "Crie um curr\u00edculo profissional completo a partir das suas informa\u00e7\u00f5es."},
+    {"id": "melhorar-resumo", "icon": "\u2728", "label": "Melhorar Resumo", "desc": "Transforme seu resumo profissional em um texto impactante e direto."},
+    {"id": "melhorar-experiencia", "icon": "\uD83D\uDCC8", "label": "Melhorar Experi\u00eancia", "desc": "Reescreva suas experi\u00eancias com linguagem profissional e resultados."},
+    {"id": "corrigir-gramatica", "icon": "\uD83D\uDD24", "label": "Corrigir Gram\u00e1tica", "desc": "Corrija erros ortogr\u00e1ficos e gramaticais do seu curr\u00edculo."},
+    {"id": "tornar-profissional", "icon": "\uD83C\uDFC6", "label": "Tornar Profissional", "desc": "Adicione linguagem corporativa e termos de ind\u00fastria ao seu CV."},
+    {"id": "otimizar-ats", "icon": "\uD83D\uDD0D", "label": "Otimizar para ATS", "desc": "Otimize seu curr\u00edculo para passar em sistemas de rastreamento autom\u00e1tico."},
+    {"id": "adaptar-vaga", "icon": "\uD83C\uDFE2", "label": "Adaptar para Vaga", "desc": "Cole a descri\u00e7\u00e3o da vaga e receba sugest\u00f5es de adapta\u00e7\u00e3o."},
+    {"id": "traduzir-pt", "icon": "\uD83C\uDDEC\uD83C\uDDE7", "label": "Traduzir para Ingl\u00eas", "desc": "Traduza seu curr\u00edculo completo para ingl\u00eas profissional."}
+  ],
+  "imports": [
+    {"id": "import-pdf", "icon": "\uD83D\uDCC4", "label": "Importar PDF"},
+    {"id": "import-docx", "icon": "\uD83D\uDCC3", "label": "Importar DOCX"},
+    {"id": "import-txt", "icon": "\uD83D\uDCDD", "label": "Importar TXT"}
+  ],
+  "import_tags": ["Nome", "Contato", "Experi\u00eancia", "Forma\u00e7\u00e3o", "Habilidades", "Idiomas", "Certifica\u00e7\u00f5es"],
+  "niches": [
+    {"id": "template-europe", "icon": "\uD83C\uDDEA\uD83C\uDDFA", "label": "Europe Professional"},
+    {"id": "template-ats", "icon": "\uD83D\uDD0D", "label": "Modern ATS"},
+    {"id": "template-executive", "icon": "\uD83C\uDFC6", "label": "Executive Clean"}
+  ],
+  "action_buttons": [
+    {"id": "melhorar-resumo", "label": "Melhorar Resumo", "icon": "\u2728"},
+    {"id": "melhorar-experiencia", "label": "Melhorar Experi\u00eancia", "icon": "\uD83D\uDCC8"},
+    {"id": "corrigir-gramatica", "label": "Corrigir Gram\u00e1tica", "icon": "\uD83D\uDD24"},
+    {"id": "otimizar-ats", "label": "Otimizar ATS", "icon": "\uD83D\uDD0D"},
+    {"id": "adaptar-vaga", "label": "Adaptar Vaga", "icon": "\uD83C\uDFE2"},
+    {"id": "traduzir-pt", "label": "Traduzir EN", "icon": "\uD83C\uDDEC\uD83C\uDDE7"}
+  ],
+  "uploads": {
+    "image": false,
+    "pdf": true,
+    "screenshot": false,
+    "url": false
+  },
+  "url_analysis": {
+    "types": [],
+    "platform_patterns": [],
+    "product_type_keywords": {}
+  },
+  "system_prompts": {
+    "image": "",
+    "pdf": "Analise este documento e extraia todas as informacoes de curriculo presentes.",
+    "screenshot": "",
+    "url": {}
+  },
+  "prompts": {
+    "dashboard": "Voc\u00ea \u00e9 o assistente do CV Remix PRO. Como posso ajudar com seu curr\u00edculo?",
+    "criar-do-zero": "Voc\u00ea \u00e9 um consultor de carreira. Pergunte ao usu\u00e1rio: Qual seu nome completo? Qual seu email? Qual seu telefone? Qual sua cidade/pa\u00eds? Qual seu t\u00edtulo profissional? Qual seu resumo profissional (2-3 linhas)? Quais suas experi\u00eancias (empresa, cargo, per\u00edodo, responsabilidades)? Qual sua forma\u00e7\u00e3o acad\u00eamica? Quais suas habilidades? Quais idiomas? Quais certifica\u00e7\u00f5es? Aguarde as respostas antes de gerar o curr\u00edculo.",
+    "melhorar-resumo": "Voc\u00ea \u00e9 um consultor de carreira. Melhore o resumo profissional do curr\u00edculo abaixo. Mantenha o conte\u00fado real. Apenas melhore a escrita, torne mais impactante e profissional. N\u00e3o invente informa\u00e7\u00f5es novas.",
+    "melhorar-experiencia": "Voc\u00ea \u00e9 um consultor de carreira. Melhore as experi\u00eancias profissionais do curr\u00edculo abaixo. Use verbos de a\u00e7\u00e3o, adicione m\u00e9tricas quando poss\u00edvel, mantenha o conte\u00fado real. N\u00e3o invente empresas ou cargos novos.",
+    "corrigir-gramatica": "Voc\u00ea \u00e9 um revisor profissional. Corrija todos os erros ortogr\u00e1ficos e gramaticais do curr\u00edculo. N\u00e3o altere o conte\u00fado, apenas corrija a escrita.",
+    "tornar-profissional": "Voc\u00ea \u00e9 um consultor de carreira. Reescreva o curr\u00edculo usando linguagem corporativa profissional, termos da ind\u00fastria e tom executivo. Mantenha todos os fatos inalterados.",
+    "resumir": "Voc\u00ea \u00e9 um consultor de carreira. Resuma o curr\u00edculo para caber em 1 p\u00e1gina. Mantenha as informa\u00e7\u00f5es mais importantes. Priorize experi\u00eancias recentes e relevantes.",
+    "expandir": "Voc\u00ea \u00e9 um consultor de carreira. Expanda as informa\u00e7\u00f5es do curr\u00edculo, adicionando detalhes relevantes baseados no que j\u00e1 existe. N\u00e3o invente experi\u00eancias novas.",
+    "otimizar-ats": "Voc\u00ea \u00e9 um especialista em ATS (Applicant Tracking System). Analise e otimize o curr\u00edculo para passar em filtros autom\u00e1ticos. Adicione palavras-chave relevantes ao setor. Mantenha formata\u00e7\u00e3o simples e limpa.",
+    "adaptar-vaga": "Voc\u00ea \u00e9 um consultor de carreira. Compare o curr\u00edculo com a vaga descrita e sugira adapta\u00e7\u00f5es para aumentar a compatibilidade. Nunca adicione compet\u00eancias que a pessoa n\u00e3o possui. Destaque pontos fortes e sugira reorganiza\u00e7\u00e3o.",
+    "traduzir-pt": "Voc\u00ea \u00e9 um tradutor profissional de curr\u00edculos. Traduza o curr\u00edculo para ingl\u00eas profissional. Preserve: nomes pr\u00f3prios, empresas, datas, URLs, emails, n\u00fameros, certifica\u00e7\u00f5es oficiais. O texto deve soar como um curr\u00edculo nativo em ingl\u00eas. N\u00e3o fa\u00e7a tradu\u00e7\u00e3o literal.",
+    "traduzir-es": "Voc\u00ea \u00e9 um tradutor profissional de curr\u00edculos. Traduza o curr\u00edculo para espanhol profissional. Preserve: nomes pr\u00f3prios, empresas, datas, URLs, emails, n\u00fameros, certifica\u00e7\u00f5es oficiais. O texto deve soar como um curr\u00edculo nativo em espanhol.",
+    "traduzir-fr": "Voc\u00ea \u00e9 um tradutor profissional de curr\u00edculos. Traduza o curr\u00edculo para franc\u00eas profissional. Preserve: nomes pr\u00f3prios, empresas, datas, URLs, emails, n\u00fameros, certifica\u00e7\u00f5es oficiais.",
+    "traduzir-de": "Voc\u00ea \u00e9 um tradutor profissional de curr\u00edculos. Traduza o curr\u00edculo para alem\u00e3o profissional. Preserve: nomes pr\u00f3prios, empresas, datas, URLs, emails, n\u00fameros, certifica\u00e7\u00f5es oficiais.",
+    "traduzir-it": "Voc\u00ea \u00e9 um tradutor profissional de curr\u00edculos. Traduza o curr\u00edculo para italiano profissional. Preserve: nomes pr\u00f3prios, empresas, datas, URLs, emails, n\u00fameros, certifica\u00e7\u00f5es oficiais.",
+    "nicho-loja": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-infoproduto": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-advocacia": "Voc\u00ea \u00e9 um consultor de carreira para \u00e1reas jur\u00eddicas. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-clinica": "Voc\u00ea \u00e9 um consultor de carreira para \u00e1reas da sa\u00fade. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-odontologia": "Voc\u00ea \u00e9 um consultor de carreira para odontologia. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-estetica": "Voc\u00ea \u00e9 um consultor de carreira para est\u00e9tica. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-academia": "Voc\u00ea \u00e9 um consultor de carreira para educa\u00e7\u00e3o f\u00edsica. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-restaurante": "Voc\u00ea \u00e9 um consultor de carreira para gastronomia. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-cursos": "Voc\u00ea \u00e9 um consultor de carreira para educa\u00e7\u00e3o. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-apps": "Voc\u00ea \u00e9 um consultor de carreira para tecnologia. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-saas": "Voc\u00ea \u00e9 um consultor de carreira para SaaS e tecnologia. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-consultoria": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-imobiliaria": "Voc\u00ea \u00e9 um consultor de carreira para o setor imobili\u00e1rio. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-automotivo": "Voc\u00ea \u00e9 um consultor de carreira para o setor automotivo. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-ebook": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "nicho-pv": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "criar-app": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "melhorar-ebook": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "pesquisa-mercado": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "google-ads": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?",
+    "analise-resultados": "Voc\u00ea \u00e9 um consultor de carreira. Como posso ajudar com seu curr\u00edculo?"
+  }
+}

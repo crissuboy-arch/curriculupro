@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Remix PRO</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg-dark:#08142E;--bg-panel:#0B1E3C;--bg-input:rgba(37,99,235,.08);
+--bg-input-focus:rgba(37,99,235,.14);--blue:#2563EB;--blue-hover:#1D4ED8;
+--gold:#F6C453;--gold-hover:#E5B33E;--text:#E2E8F0;--text-dim:#94A3B8;
+--text-muted:#64748B;--border:rgba(148,163,184,.15);--glass:rgba(15,40,80,.55);
+--glass-border:rgba(148,163,184,.12);--radius:8px;--radius-lg:12px;
+--transition:all .2s ease;--green:#22C55E;--red:#EF4444;
+}
+html{font-size:14px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg-dark);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;font-size:.85rem;border:none;border-radius:var(--radius);padding:6px 14px;transition:var(--transition);display:inline-flex;align-items:center;gap:6px}
+input,textarea,select{font-family:inherit;font-size:.85rem;background:var(--bg-input);border:1px solid var(--glass-border);border-radius:var(--radius);color:var(--text);padding:8px 12px;width:100%;outline:none;transition:var(--transition)}
+input:focus,textarea:focus,select:focus{background:var(--bg-input-focus);border-color:var(--blue)}
+textarea{resize:vertical;min-height:60px}
+label{display:block;font-size:.75rem;color:var(--text-dim);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+select option{background:var(--bg-panel);color:var(--text)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.toolbar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:linear-gradient(135deg,#061024,#0A1A38);border-bottom:1px solid var(--glass-border);flex-shrink:0;min-height:52px;flex-wrap:wrap}
+.toolbar-brand{display:flex;align-items:center;gap:8px;margin-right:12px}
+.toolbar-brand h1{font-size:1.1rem;font-weight:700;color:var(--gold);white-space:nowrap}
+.toolbar-brand a{color:var(--text-dim);font-size:1.1rem}
+.toolbar-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.toolbar-sep{width:1px;height:28px;background:var(--glass-border);margin:0 4px}
+.btn{background:var(--blue);color:#fff;font-weight:600}
+.btn:hover{background:var(--blue-hover)}
+.btn-gold{background:var(--gold);color:#1a1a1a;font-weight:700}
+.btn-gold:hover{background:var(--gold-hover)}
+.btn-outline{background:transparent;border:1px solid var(--glass-border);color:var(--text-dim)}
+.btn-outline:hover{border-color:var(--blue);color:var(--text)}
+.btn-sm{padding:4px 10px;font-size:.78rem}
+.btn-xs{padding:3px 8px;font-size:.72rem}
+.btn-green{background:var(--green);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:var(--radius);padding:4px;min-width:200px;z-index:100;box-shadow:0 12px 32px rgba(0,0,0,.5);max-height:300px;overflow-y:auto}
+.dropdown-menu.open{display:block}
+.dropdown-menu button{width:100%;text-align:left;padding:8px 12px;border-radius:4px;background:transparent;color:var(--text);font-weight:400}
+.dropdown-menu button:hover{background:var(--bg-input-focus)}
+.dropdown-menu button.active{background:var(--blue);color:#fff}
+.lang-btn{font-size:.72rem;padding:3px 8px;background:transparent;border:1px solid var(--glass-border);color:var(--text-dim);border-radius:4px}
+.lang-btn:hover,.lang-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(37,99,235,.08)}
+.tabs{display:none;flex-shrink:0}
+.tabs button{flex:1;padding:10px;border-radius:0;background:var(--bg-panel);color:var(--text-dim);font-weight:700;text-transform:uppercase;font-size:.85rem;border-bottom:2px solid transparent}
+.tabs button.active{color:var(--blue);border-bottom-color:var(--blue);background:rgba(37,99,235,.06)}
+.main{display:flex;flex:1;overflow:hidden}
+.editor-panel{width:55%;overflow-y:auto;padding:20px;border-right:1px solid var(--glass-border);background:var(--bg-panel)}
+.preview-panel{width:45%;overflow-y:auto;padding:20px;background:rgba(8,20,46,.6);display:flex;justify-content:center;align-items:flex-start}
+.section{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;transition:var(--transition)}
+.section-header:hover{background:rgba(37,99,235,.06)}
+.section-header h2{font-size:.9rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.8px}
+.section-header .chevron{color:var(--text-muted);transition:transform .25s;font-size:.8rem}
+.section-header.collapsed .chevron{transform:rotate(-90deg)}
+.section-body{padding:0 16px 16px}
+.section-body.hidden{display:none}
+.field-group{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field-group.single{grid-template-columns:1fr}
+.field{margin-bottom:2px}
+.item-block{background:rgba(0,0,0,.15);border:1px solid var(--glass-border);border-radius:var(--radius);padding:12px;margin-bottom:10px;position:relative}
+.item-block .remove-btn{position:absolute;top:8px;right:8px;background:rgba(239,68,68,.15);color:#EF4444;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:.8rem;padding:0}
+.item-block .remove-btn:hover{background:rgba(239,68,68,.3)}
+.add-btn{background:rgba(37,99,235,.1);color:var(--blue);border:1px dashed var(--blue);width:100%;padding:10px;justify-content:center;font-weight:600;margin-top:6px}
+.add-btn:hover{background:rgba(37,99,235,.2)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{background:rgba(37,99,235,.12);color:var(--blue);padding:4px 10px;border-radius:20px;font-size:.78rem;display:flex;align-items:center;gap:4px}
+.tag .tag-remove{cursor:pointer;opacity:.7;font-size:.7rem}
+.tag .tag-remove:hover{opacity:1}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--gold));z-index:1000;transition:width .3s}
+.cv-card{background:#fff;color:#1a1a1a;width:100%;max-width:700px;min-height:900px;padding:40px;border-radius:4px;box-shadow:0 8px 40px rgba(0,0,0,.3);font-size:13px;line-height:1.5}
+.cv-card h1{font-size:22px;color:#0B1E3C;margin-bottom:2px;font-weight:800}
+.cv-card h2{font-size:13px;color:var(--blue);text-transform:uppercase;letter-spacing:1.2px;border-bottom:2px solid var(--blue);padding-bottom:4px;margin:16px 0 8px;font-weight:700}
+.cv-card .subtitle{color:#64748B;font-size:13px;margin-bottom:4px}
+.cv-card .contact{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:#475569;margin-bottom:12px}
+.cv-card .contact span{white-space:nowrap}
+.cv-card .exp-item{margin-bottom:12px}
+.cv-card .exp-item .role{font-weight:700;font-size:13px;color:#1E293B}
+.cv-card .exp-item .meta{font-size:11px;color:#64748B;margin-bottom:4px}
+.cv-card ul{margin:4px 0 0 18px;padding:0}
+.cv-card li{font-size:12px;color:#334155;margin-bottom:2px}
+.cv-card .skills-list{display:flex;flex-wrap:wrap;gap:6px}
+.cv-card .skills-list span{background:#EFF6FF;color:#1D4ED8;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.cv-card .lang-item{display:flex;justify-content:space-between;max-width:300px}
+.cv-card .cert-item,.cv-card .course-item{margin-bottom:4px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;justify-content:center;align-items:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:24px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto}
+.modal h3{margin-bottom:16px;font-size:1rem;color:var(--gold)}
+.modal textarea{min-height:120px}
+.modal-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.ai-result{background:rgba(0,0,0,.2);border:1px solid var(--glass-border);border-radius:var(--radius);padding:12px;margin-top:12px;max-height:300px;overflow-y:auto;font-size:.82rem;white-space:pre-wrap;color:var(--text-dim)}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg-panel);border:1px solid var(--blue);color:var(--text);padding:12px 20px;border-radius:var(--radius);z-index:300;font-size:.85rem;box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:all .3s}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{border-color:#EF4444}
+.import-zone{border:2px dashed var(--glass-border);border-radius:var(--radius-lg);padding:32px 20px;text-align:center;margin-bottom:16px;transition:var(--transition);cursor:pointer;background:rgba(37,99,235,.03)}
+.import-zone:hover,.import-zone.dragover{border-color:var(--blue);background:rgba(37,99,235,.08)}
+.import-zone h3{color:var(--gold);font-size:1rem;margin-bottom:8px}
+.import-zone p{color:var(--text-dim);font-size:.82rem;margin-bottom:12px}
+.import-zone .import-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.toggle-group{display:flex;gap:8px;margin-top:4px}
+.toggle-btn{padding:6px 16px;border-radius:20px;font-size:.8rem;border:1px solid var(--glass-border);background:transparent;color:var(--text-dim);transition:var(--transition)}
+.toggle-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.toggle-btn.yes{background:var(--green);color:#fff;border-color:var(--green)}
+.toggle-btn.no{background:transparent;color:var(--text-dim);border-color:var(--glass-border)}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.checkbox-item{display:flex;align-items:center;gap:4px;font-size:.8rem;color:var(--text-dim);cursor:pointer;padding:4px 8px;border:1px solid var(--glass-border);border-radius:4px;transition:var(--transition)}
+.checkbox-item.checked{background:rgba(37,99,235,.15);border-color:var(--blue);color:var(--blue)}
+.target-job-bar{background:linear-gradient(135deg,rgba(246,196,83,.08),rgba(37,99,235,.08));border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.target-job-bar label{margin:0;white-space:nowrap;color:var(--gold)}
+.target-job-bar input{flex:1;min-width:200px}
+.compare-bar{display:flex;gap:8px;margin-bottom:12px}
+.compare-bar button{flex:1;padding:8px;font-weight:600}
+.compare-bar button.active{background:var(--blue);color:#fff}
+.ai-inline{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.ai-inline button{font-size:.72rem;padding:3px 8px}
+@media(max-width:900px){
+.toolbar{padding:6px 10px}.toolbar-brand h1{font-size:.95rem}
+.tabs{display:flex}.main{flex-direction:column}
+.editor-panel,.preview-panel{width:100%;display:none}
+.editor-panel.mobile-show,.preview-panel.mobile-show{display:block;overflow-y:auto}
+.preview-panel{padding:12px}.cv-card{padding:24px;min-height:auto}
+.field-group{grid-template-columns:1fr}
+}
+@media(max-width:480px){.toolbar-group{gap:4px}.toolbar-sep{display:none}.cv-card{padding:16px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="loading-bar" id="loadingBar" style="width:0"></div>
+
+<div class="toolbar">
+  <div class="toolbar-brand">
+    <a href="/" title="Voltar">&#8592;</a>
+    <h1>CV Remix PRO</h1>
+  </div>
+  <div class="toolbar-group">
+    <div class="dropdown" id="tplDropdown">
+      <button class="btn btn-outline btn-sm" onclick="toggleDropdown('tplDropdown')">&#9776; Template</button>
+      <div class="dropdown-menu" id="tplMenu">
+        <button class="active" onclick="selectTemplate('europe',this)">Europe Professional</button>
+        <button onclick="selectTemplate('modern-ats',this)">Modern ATS</button>
+        <button onclick="selectTemplate('executive',this)">Executive Clean</button>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="toolbar-group">
+    <div class="dropdown" id="aiDropdown">
+      <button class="btn btn-gold btn-sm" onclick="toggleDropdown('aiDropdown')">&#10024; AI Tools</button>
+      <div class="dropdown-menu" id="aiMenu">
+        <button onclick="runAI('improve_summary')">Melhorar Resumo</button>
+        <button onclick="runAI('improve_experience')">Melhorar Experi&ecirc;ncia</button>
+        <button onclick="runAI('fix_grammar')">Corrigir Gram&aacute;tica</button>
+        <button onclick="runAI('make_professional')">Tornar Profissional</button>
+        <button onclick="runAI('optimize_ats')">Otimizar ATS</button>
+        <button onclick="runAI('adapt_pt')">Adaptar para Portugal</button>
+        <button onclick="runAI('summarize')">Resumir</button>
+        <button onclick="runAI('expand')">Expandir</button>
+        <button onclick="runAI('improve_all')">Melhorar Tudo</button>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="toolbar-group">
+    <div class="dropdown" id="langDropdown">
+      <button class="btn btn-outline btn-sm" onclick="toggleDropdown('langDropdown')">&#127760; Idioma CV</button>
+      <div class="dropdown-menu" id="langMenu">
+        <button class="active" onclick="setCVLanguage('pt-pt',this)">Portugu&ecirc;s &mdash; Portugal</button>
+        <button onclick="setCVLanguage('pt-br',this)">Portugu&ecirc;s &mdash; Brasil</button>
+        <button onclick="setCVLanguage('en',this)">English</button>
+        <button onclick="setCVLanguage('es',this)">Espa&ntilde;ol</button>
+        <button onclick="setCVLanguage('fr',this)">Fran&ccedil;ais</button>
+        <button onclick="setCVLanguage('de',this)">Deutsch</button>
+        <button onclick="setCVLanguage('it',this)">Italiano</button>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="toolbar-group">
+    <button class="btn btn-gold btn-sm" onclick="openAdaptModal()">&#9998; Adaptar p/ Vaga</button>
+    <button class="btn btn-sm" onclick="exportPDF()">&#128196; PDF</button>
+    <button class="btn btn-outline btn-sm" onclick="exportDOCX()">&#128196; DOCX</button>
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('uploadPDF').click()">&#8682; Importar</button>
+    <input type="file" id="uploadPDF" accept=".pdf,.docx,.txt" style="display:none" onchange="uploadFile(event)">
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="active" onclick="switchTab('editor',this)">EDITAR</button>
+  <button onclick="switchTab('preview',this)">VISUALIZAR</button>
+</div>
+
+<div class="main">
+  <div class="editor-panel mobile-show" id="editorPanel"></div>
+  <div class="preview-panel" id="previewPanel">
+    <div class="cv-card" id="cvPreview"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="adaptModal">
+  <div class="modal">
+    <h3>Adaptar CV para Vaga</h3>
+    <label>Cargo / Fun&ccedil;&atilde;o Desejada</label>
+    <input type="text" id="adaptJobTitle" placeholder="Ex: Assistente Administrativo, Soldador, Motorista...">
+    <label style="margin-top:10px">Descri&ccedil;&atilde;o da Vaga (opcional)</label>
+    <textarea id="adaptJD" placeholder="Cole a descri&ccedil;&atilde;o da vaga aqui..."></textarea>
+    <div class="field" style="margin-top:10px">
+      <label>URL da Vaga (opcional)</label>
+      <input type="text" id="adaptURL" placeholder="https://...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeAdaptModal()">Cancelar</button>
+      <button class="btn btn-gold" id="adaptBtn" onclick="runAdapt()">Adaptar Curriculo</button>
+    </div>
+    <div class="ai-result" id="adaptResult" style="display:none"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="aiResultModal">
+  <div class="modal">
+    <h3 id="aiResultTitle">Resultado IA</h3>
+    <div class="compare-bar" id="compareBar" style="display:none">
+      <button class="active" onclick="showCompare('new',this)">Vers&atilde;o Otimizada</button>
+      <button onclick="showCompare('old',this)">Original</button>
+    </div>
+    <div class="ai-result" id="aiResultBody"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeAIResultModal()">Fechar</button>
+      <button class="btn" id="applyAIResult" onclick="applyAIResult()" style="display:none">Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CV_LANG_LABELS={'pt-pt':'Portugues - Portugal','pt-br':'Portugues - Brasil','en':'English','es':'Espanol','fr':'Francais','de':'Deutsch','it':'Italiano'};
+let cvLanguage='pt-pt';
+let cvOriginal=null;
+let cv={
+  personal:{name:'',title:'',email:'',phone:'',location:'',country:'',nationality:'',dob:'',linkedin:'',portfolio:''},
+  target_job:'',
+  summary:'',
+  experience:[{company:'',role:'',period:'',responsibilities:[''],results:['']}],
+  education:[{institution:'',degree:'',period:'',details:''}],
+  skills_technical:[''],
+  skills_personal:[''],
+  languages:[{language:'',level:''}],
+  certifications:[{name:'',institution:'',year:'',validity:'',credential:''}],
+  courses:[{name:'',institution:'',period:''}],
+  links:[{label:'',url:''}],
+  driving_license:{has:false,categories:[],has_vehicle:false},
+  availability:{immediate:false,shifts:false,weekends:false,relocations:false,relocate:false},
+  work_authorization:{status:'',residence_permit:''}
+};
+let currentTemplate='europe';
+let lastAIResponse=null;
+let lastAIField=null;
+let aiOriginalSnapshot=null;
+
+function showLoading(show){
+  const bar=document.getElementById('loadingBar');
+  if(show){bar.style.width='60%';bar.style.opacity='1'}
+  else{bar.style.width='0';bar.style.opacity='0'}
+}
+function toast(msg,isError){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(isError?' error':'');
+  setTimeout(()=>{t.className='toast'},3500);
+}
+function toggleDropdown(id){
+  document.querySelectorAll('.dropdown-menu').forEach(m=>{
+    if(m.id!==id.replace('Dropdown','Menu'))m.classList.remove('open');
+  });
+  const menu=document.getElementById(id.replace('Dropdown','Menu'));
+  if(menu)menu.classList.toggle('open');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.dropdown'))document.querySelectorAll('.dropdown-menu').forEach(m=>m.classList.remove('open'));
+});
+function selectTemplate(tpl,btn){
+  currentTemplate=tpl;
+  document.querySelectorAll('#tplMenu button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPreview();
+  toggleDropdown('tplDropdown');
+}
+function switchTab(tab,btn){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const ep=document.getElementById('editorPanel');
+  const pp=document.getElementById('previewPanel');
+  if(tab==='editor'){ep.classList.add('mobile-show');pp.classList.remove('mobile-show')}
+  else{pp.classList.add('mobile-show');ep.classList.remove('mobile-show')}
+}
+function toggleSection(id){
+  const body=document.getElementById(id);
+  if(!body)return;
+  const hdr=body.previousElementSibling;
+  body.classList.toggle('hidden');
+  if(hdr)hdr.classList.toggle('collapsed');
+}
+function updateCV(path,value){
+  const keys=path.split('.');
+  let obj=cv;
+  for(let i=0;i<keys.length-1;i++){
+    const k=keys[i];
+    if(/^\d+$/.test(k))obj=obj[parseInt(k)];else obj=obj[k];
+  }
+  obj[keys[keys.length-1]]=value;
+  renderPreview();
+}
+function getNestedValue(path){
+  const keys=path.split('.');
+  let obj=cv;
+  for(const k of keys){
+    if(/^\d+$/.test(k))obj=obj[parseInt(k)];else obj=obj[k];
+  }
+  return obj;
+}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function splitArr(val){return val.split(',').map(s=>s.trim()).filter(s=>s)}
+function setCVLanguage(lang,btn){
+  cvLanguage=lang;
+  document.querySelectorAll('#langMenu button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  toggleDropdown('langDropdown');
+  toast('Idioma do CV: '+CV_LANG_LABELS[lang]);
+}
+
+function renderEditor(){
+  const p=cv.personal;
+  let html=`
+  <!-- IMPORT ZONE -->
+  <div class="import-zone" id="importZone" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+    <h3>&#128194; Importar Curriculo Existente</h3>
+    <p>Arraste um ficheiro ou clique para importar. O conteudo sera extraido e preenche automaticamente o editor.</p>
+    <div class="import-btns">
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('uploadPDF').click()">&#8682; Anexar Curriculo (PDF, DOCX, TXT)</button>
+    </div>
+  </div>
+
+  <!-- TARGET JOB -->
+  <div class="target-job-bar">
+    <label>&#128188; Cargo Desejado:</label>
+    <input type="text" value="${esc(cv.target_job)}" oninput="updateCV('target_job',this.value)" placeholder="Ex: Assistente Administrativo, Soldador, Motorista...">
+    <button class="btn btn-gold btn-xs" onclick="adaptForTargetJob()">Adaptar</button>
+  </div>
+
+  <!-- DADOS PESSOAIS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-personal')"><h2>Dados Pessoais</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-personal">
+      <div class="field-group">
+        <div class="field"><label>Nome Completo</label><input value="${esc(p.name)}" oninput="updateCV('personal.name',this.value)"></div>
+        <div class="field"><label>Cargo / Funcao Profissional</label><input value="${esc(p.title)}" oninput="updateCV('personal.title',this.value)"></div>
+        <div class="field"><label>E-mail</label><input type="email" value="${esc(p.email)}" oninput="updateCV('personal.email',this.value)"></div>
+        <div class="field"><label>Telefone / Telemovel</label><input value="${esc(p.phone)}" oninput="updateCV('personal.phone',this.value)"></div>
+        <div class="field"><label>Localidade</label><input value="${esc(p.location)}" oninput="updateCV('personal.location',this.value)"></div>
+        <div class="field"><label>Pais</label><input value="${esc(p.country)}" oninput="updateCV('personal.country',this.value)"></div>
+        <div class="field"><label>Nacionalidade</label><input value="${esc(p.nationality)}" oninput="updateCV('personal.nationality',this.value)"></div>
+        <div class="field"><label>Data de Nascimento (opcional)</label><input type="date" value="${esc(p.dob)}" oninput="updateCV('personal.dob',this.value)"></div>
+        <div class="field"><label>LinkedIn</label><input value="${esc(p.linkedin)}" oninput="updateCV('personal.linkedin',this.value)"></div>
+        <div class="field"><label>Portfolio / Website</label><input value="${esc(p.portfolio)}" oninput="updateCV('personal.portfolio',this.value)"></div>
+      </div>
+      <div class="ai-inline">
+        <button class="btn btn-gold btn-xs" onclick="runSectionAI('personal')">Melhorar Texto</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('professional')">Tornar Profissional</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-summary')"><h2>Resumo Profissional</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-summary">
+      <div class="field-group single">
+        <div class="field"><label>Resumo</label><textarea rows="4" oninput="updateCV('summary',this.value)">${esc(cv.summary)}</textarea></div>
+      </div>
+      <div class="ai-inline">
+        <button class="btn btn-gold btn-xs" onclick="runSectionAI('improve_summary')">Melhorar Resumo</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('fix_grammar')">Corrigir Gramatica</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('make_professional')">Tornar Profissional</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('summarize')">Resumir</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('expand')">Expandir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCIA -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-exp')"><h2>Experiencia Profissional</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-exp">`;
+  cv.experience.forEach((exp,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('experience',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Cargo</label><input value="${esc(exp.role)}" oninput="updateCV('experience.${i}.role',this.value)"></div>
+          <div class="field"><label>Empresa</label><input value="${esc(exp.company)}" oninput="updateCV('experience.${i}.company',this.value)"></div>
+        </div>
+        <div class="field" style="margin-top:8px"><label>Periodo</label><input value="${esc(exp.period)}" oninput="updateCV('experience.${i}.period',this.value)"></div>
+        <div class="field" style="margin-top:8px"><label>Responsabilidades (virgula)</label><textarea rows="3" oninput="updateCV('experience.${i}.responsibilities',splitArr(this.value))">${esc((exp.responsibilities||[]).join(', '))}</textarea></div>
+        <div class="field" style="margin-top:8px"><label>Resultados (virgula)</label><textarea rows="2" oninput="updateCV('experience.${i}.results',splitArr(this.value))">${esc((exp.results||[]).join(', '))}</textarea></div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addExperience()">+ Adicionar Experiencia</button>
+      <div class="ai-inline">
+        <button class="btn btn-gold btn-xs" onclick="runSectionAI('improve_experience')">Melhorar Experiencia</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('make_professional')">Tornar Profissional</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMACAO -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-edu')"><h2>Formacao Academica</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-edu">`;
+  cv.education.forEach((edu,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('education',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Grau / Curso</label><input value="${esc(edu.degree)}" oninput="updateCV('education.${i}.degree',this.value)"></div>
+          <div class="field"><label>Instituicao</label><input value="${esc(edu.institution)}" oninput="updateCV('education.${i}.institution',this.value)"></div>
+        </div>
+        <div class="field" style="margin-top:8px"><label>Periodo</label><input value="${esc(edu.period)}" oninput="updateCV('education.${i}.period',this.value)"></div>
+        <div class="field" style="margin-top:8px"><label>Detalhes</label><textarea rows="2" oninput="updateCV('education.${i}.details',this.value)">${esc(edu.details)}</textarea></div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addEducation()">+ Adicionar Formacao</button>
+    </div>
+  </div>
+
+  <!-- COMPETENCIAS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-skills')"><h2>Competencias</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-skills">
+      <div class="field-group single">
+        <div class="field"><label>Competencias Tecnicas (virgula)</label><input value="${esc(cv.skills_technical.join(', '))}" oninput="updateCV('skills_technical',splitArr(this.value))"></div>
+      </div>
+      <div class="tags" id="skillsTechTags"></div>
+      <div class="field-group single" style="margin-top:10px">
+        <div class="field"><label>Competencias Pessoais (virgula)</label><input value="${esc(cv.skills_personal.join(', '))}" oninput="updateCV('skills_personal',splitArr(this.value))"></div>
+      </div>
+      <div class="tags" id="skillsPersTags"></div>
+      <div class="ai-inline">
+        <button class="btn btn-gold btn-xs" onclick="runSectionAI('optimize_ats')">Otimizar ATS</button>
+        <button class="btn btn-outline btn-xs" onclick="runSectionAI('adapt_pt')">Adaptar para Portugal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDIOMAS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-langs')"><h2>Idiomas</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-langs">`;
+  cv.languages.forEach((lang,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('languages',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Idioma</label><input value="${esc(lang.language)}" oninput="updateCV('languages.${i}.language',this.value)"></div>
+          <div class="field"><label>Nivel</label>
+            <select onchange="updateCV('languages.${i}.level',this.value)">
+              <option value="" ${!lang.level?'selected':''}></option>
+              <option value="Basico" ${lang.level==='Basico'?'selected':''}>Basico</option>
+              <option value="Intermediario" ${lang.level==='Intermediario'?'selected':''}>Intermediario</option>
+              <option value="Avancado" ${lang.level==='Avancado'?'selected':''}>Avancado</option>
+              <option value="Fluente" ${lang.level==='Fluente'?'selected':''}>Fluente</option>
+              <option value="Nativo" ${lang.level==='Nativo'?'selected':''}>Nativo</option>
+            </select>
+          </div>
+        </div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addLanguage()">+ Adicionar Idioma</button>
+    </div>
+  </div>
+
+  <!-- CERTIFICACOES -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-certs')"><h2>Certificacoes / Habilitacoes</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-certs">`;
+  cv.certifications.forEach((cert,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('certifications',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Nome da Certificacao</label><input value="${esc(cert.name)}" oninput="updateCV('certifications.${i}.name',this.value)"></div>
+          <div class="field"><label>Entidade Emissora</label><input value="${esc(cert.institution)}" oninput="updateCV('certifications.${i}.institution',this.value)"></div>
+        </div>
+        <div class="field-group" style="margin-top:8px">
+          <div class="field"><label>Data / Ano</label><input value="${esc(cert.year)}" oninput="updateCV('certifications.${i}.year',this.value)"></div>
+          <div class="field"><label>Validade</label><input value="${esc(cert.validity)}" oninput="updateCV('certifications.${i}.validity',this.value)"></div>
+        </div>
+        <div class="field" style="margin-top:8px"><label>Numero / Credencial (opcional)</label><input value="${esc(cert.credential)}" oninput="updateCV('certifications.${i}.credential',this.value)"></div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addCertification()">+ Adicionar Certificacao</button>
+    </div>
+  </div>
+
+  <!-- CURSOS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-courses')"><h2>Cursos Complementares</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-courses">`;
+  cv.courses.forEach((course,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('courses',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Nome</label><input value="${esc(course.name)}" oninput="updateCV('courses.${i}.name',this.value)"></div>
+          <div class="field"><label>Instituicao</label><input value="${esc(course.institution)}" oninput="updateCV('courses.${i}.institution',this.value)"></div>
+        </div>
+        <div class="field" style="margin-top:8px"><label>Periodo</label><input value="${esc(course.period)}" oninput="updateCV('courses.${i}.period',this.value)"></div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addCourse()">+ Adicionar Curso</button>
+    </div>
+  </div>
+
+  <!-- CARTA DE CONDUCAO -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-driving')"><h2>Carta de Conducao</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-driving">
+      <div class="field-group">
+        <div class="field">
+          <label>Possui Carta de Conducao?</label>
+          <div class="toggle-group">
+            <button class="toggle-btn ${cv.driving_license.has?'yes':'no'}" onclick="updateCV('driving_license.has',true);renderEditor()">Sim</button>
+            <button class="toggle-btn ${!cv.driving_license.has?'yes':'no'}" onclick="updateCV('driving_license.has',false);updateCV('driving_license.categories',[]);renderEditor()">Nao</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Viatura Propria?</label>
+          <div class="toggle-group">
+            <button class="toggle-btn ${cv.driving_license.has_vehicle?'yes':'no'}" onclick="updateCV('driving_license.has_vehicle',true);renderEditor()">Sim</button>
+            <button class="toggle-btn ${!cv.driving_license.has_vehicle?'yes':'no'}" onclick="updateCV('driving_license.has_vehicle',false);renderEditor()">Nao</button>
+          </div>
+        </div>
+      </div>`;
+  if(cv.driving_license.has){
+    const cats=['A','A1','A2','AM','B','B1','BE','C','C1','CE','D','D1','DE'];
+    html+=`<div class="field" style="margin-top:10px"><label>Categorias</label><div class="checkbox-group" id="catGroup">`;
+    cats.forEach(c=>{
+      const checked=cv.driving_license.categories.includes(c);
+      html+=`<div class="checkbox-item ${checked?'checked':''}" onclick="toggleCategory('${c}')">${c}</div>`;
+    });
+    html+=`</div></div>`;
+  }
+  html+=`</div></div>
+
+  <!-- DISPONIBILIDADE -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-avail')"><h2>Disponibilidade</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-avail">
+      <div class="field-group">
+        <div class="field"><label>Disponibilidade Imediata</label><div class="toggle-group"><button class="toggle-btn ${cv.availability.immediate?'yes':'no'}" onclick="updateCV('availability.immediate',true);renderEditor()">Sim</button><button class="toggle-btn ${!cv.availability.immediate?'yes':'no'}" onclick="updateCV('availability.immediate',false);renderEditor()">Nao</button></div></div>
+        <div class="field"><label>Turnos</label><div class="toggle-group"><button class="toggle-btn ${cv.availability.shifts?'yes':'no'}" onclick="updateCV('availability.shifts',true);renderEditor()">Sim</button><button class="toggle-btn ${!cv.availability.shifts?'yes':'no'}" onclick="updateCV('availability.shifts',false);renderEditor()">Nao</button></div></div>
+        <div class="field"><label>Fins de Semana</label><div class="toggle-group"><button class="toggle-btn ${cv.availability.weekends?'yes':'no'}" onclick="updateCV('availability.weekends',true);renderEditor()">Sim</button><button class="toggle-btn ${!cv.availability.weekends?'yes':'no'}" onclick="updateCV('availability.weekends',false);renderEditor()">Nao</button></div></div>
+        <div class="field"><label>Deslocacoes</label><div class="toggle-group"><button class="toggle-btn ${cv.availability.relocations?'yes':'no'}" onclick="updateCV('availability.relocations',true);renderEditor()">Sim</button><button class="toggle-btn ${!cv.availability.relocations?'yes':'no'}" onclick="updateCV('availability.relocations',false);renderEditor()">Nao</button></div></div>
+        <div class="field"><label>Mudanca de Residencia</label><div class="toggle-group"><button class="toggle-btn ${cv.availability.relocate?'yes':'no'}" onclick="updateCV('availability.relocate',true);renderEditor()">Sim</button><button class="toggle-btn ${!cv.availability.relocate?'yes':'no'}" onclick="updateCV('availability.relocate',false);renderEditor()">Nao</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTORIZACAO TRABALHO -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-auth')"><h2>Autorizacao / Situacao Profissional</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-auth">
+      <div class="field-group">
+        <div class="field"><label>Autorizacao para Trabalhar no Pais</label>
+          <select onchange="updateCV('work_authorization.status',this.value)">
+            <option value="" ${!cv.work_authorization.status?'selected':''}>Nao Informado</option>
+            <option value="Sim" ${cv.work_authorization.status==='Sim'?'selected':''}>Sim</option>
+            <option value="Nao" ${cv.work_authorization.status==='Nao'?'selected':''}>Nao</option>
+          </select>
+        </div>
+        <div class="field"><label>Titulo de Residencia / Autorizacao (opcional)</label><input value="${esc(cv.work_authorization.residence_permit)}" oninput="updateCV('work_authorization.residence_permit',this.value)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('sec-links')"><h2>Links</h2><span class="chevron">&#9660;</span></div>
+    <div class="section-body" id="sec-links">`;
+  cv.links.forEach((link,i)=>{
+    html+=`
+      <div class="item-block">
+        <button class="remove-btn" onclick="removeItem('links',${i})" title="Remover">&times;</button>
+        <div class="field-group">
+          <div class="field"><label>Label</label><input value="${esc(link.label)}" oninput="updateCV('links.${i}.label',this.value)"></div>
+          <div class="field"><label>URL</label><input value="${esc(link.url)}" oninput="updateCV('links.${i}.url',this.value)"></div>
+        </div>
+      </div>`;
+  });
+  html+=`
+      <button class="add-btn btn-outline" onclick="addLink()">+ Adicionar Link</button>
+    </div>
+  </div>`;
+
+  document.getElementById('editorPanel').innerHTML=html;
+  renderSkillsTags();
+}
+
+function renderSkillsTags(){
+  const t1=document.getElementById('skillsTechTags');
+  const t2=document.getElementById('skillsPersTags');
+  if(t1)t1.innerHTML=cv.skills_technical.filter(s=>s.trim()).map(s=>`<span class="tag">${esc(s)}<span class="tag-remove" onclick="removeSkill('technical','${esc(s)}')">&times;</span></span>`).join('');
+  if(t2)t2.innerHTML=cv.skills_personal.filter(s=>s.trim()).map(s=>`<span class="tag">${esc(s)}<span class="tag-remove" onclick="removeSkill('personal','${esc(s)}')">&times;</span></span>`).join('');
+}
+function removeSkill(type,skill){
+  if(type==='technical')cv.skills_technical=cv.skills_technical.filter(s=>s!==skill);
+  else cv.skills_personal=cv.skills_personal.filter(s=>s!==skill);
+  renderEditor();renderPreview();
+}
+function toggleCategory(cat){
+  const idx=cv.driving_license.categories.indexOf(cat);
+  if(idx>=0)cv.driving_license.categories.splice(idx,1);
+  else cv.driving_license.categories.push(cat);
+  renderEditor();renderPreview();
+}
+
+function addExperience(){cv.experience.push({company:'',role:'',period:'',responsibilities:[''],results:['']});renderEditor();renderPreview()}
+function addEducation(){cv.education.push({institution:'',degree:'',period:'',details:''});renderEditor();renderPreview()}
+function addLanguage(){cv.languages.push({language:'',level:''});renderEditor();renderPreview()}
+function addCertification(){cv.certifications.push({name:'',institution:'',year:'',validity:'',credential:''});renderEditor();renderPreview()}
+function addCourse(){cv.courses.push({name:'',institution:'',period:''});renderEditor();renderPreview()}
+function addLink(){cv.links.push({label:'',url:''});renderEditor();renderPreview()}
+
+function removeItem(section,index){
+  cv[section].splice(index,1);
+  if(cv[section].length===0){
+    if(section==='experience')cv[section].push({company:'',role:'',period:'',responsibilities:[''],results:['']});
+    else if(section==='education')cv[section].push({institution:'',degree:'',period:'',details:''});
+    else if(section==='languages')cv[section].push({language:'',level:''});
+    else if(section==='certifications')cv[section].push({name:'',institution:'',year:'',validity:'',credential:''});
+    else if(section==='courses')cv[section].push({name:'',institution:'',period:''});
+    else if(section==='links')cv[section].push({label:'',url:''});
+  }
+  renderEditor();renderPreview();
+}
+
+/* ===== PREVIEW TEMPLATES ===== */
+function renderPreview(){
+  const p=cv.personal;
+  let html='';
+  if(currentTemplate==='europe')html=europeTemplate(p);
+  else if(currentTemplate==='modern-ats')html=modernATSTemplate(p);
+  else html=executiveTemplate(p);
+  document.getElementById('cvPreview').innerHTML=html;
+}
+
+function buildPreviewSkills(){
+  const tech=cv.skills_technical.filter(s=>s.trim());
+  const pers=cv.skills_personal.filter(s=>s.trim());
+  return{tech,pers};
+}
+
+function buildDrivingSection(){
+  if(!cv.driving_license.has)return'';
+  const cats=cv.driving_license.categories.filter(c=>c);
+  if(!cats.length&&!cv.driving_license.has_vehicle)return'';
+  let s='Carta de Conducao: ';
+  if(cats.length)s+='Categoria'+(cats.length>1?'s':'')+' '+cats.join(', ');
+  if(cv.driving_license.has_vehicle)s+=' | Viatura propria';
+  return s;
+}
+
+function buildAvailabilitySection(){
+  const a=cv.availability;
+  const items=[];
+  if(a.immediate)items.push('Disponibilidade imediata');
+  if(a.shifts)items.push('Turnos');
+  if(a.weekends)items.push('Fins de semana');
+  if(a.relocations)items.push('Deslocacoes');
+  if(a.relocate)items.push('Mudanca de residencia');
+  return items.length?items.join(' | '):'';
+}
+
+function buildWorkAuthSection(){
+  const w=cv.work_authorization;
+  if(!w.status&&!w.residence_permit)return'';
+  let s='';
+  if(w.status)s+='Autorizacao: '+w.status;
+  if(w.residence_permit)s+=(s?' | ':'')+w.residence_permit;
+  return s;
+}
+
+function europeTemplate(p){
+  let h='';
+  h+=`<h1>${esc(p.name)||'O Seu Nome'}</h1>`;
+  if(p.title)h+=`<div class="subtitle">${esc(p.title)}</div>`;
+  const contacts=[];
+  if(p.email)contacts.push('&#9993; '+esc(p.email));
+  if(p.phone)contacts.push('&#9742; '+esc(p.phone));
+  if(p.location)contacts.push('&#9873; '+esc(p.location));
+  if(p.country)contacts.push(esc(p.country));
+  if(p.nationality)contacts.push('Nac.: '+esc(p.nationality));
+  if(p.dob)contacts.push(esc(p.dob));
+  if(p.linkedin)contacts.push('LinkedIn: '+esc(p.linkedin));
+  if(p.portfolio)contacts.push(esc(p.portfolio));
+  if(contacts.length)h+=`<div class="contact">${contacts.map(c=>'<span>'+c+'</span>').join('')}</div>`;
+  if(cv.target_job)h+=`<div style="background:#EFF6FF;padding:6px 12px;border-radius:4px;font-size:12px;color:#1D4ED8;margin-bottom:12px;font-weight:600">Cargo pretendido: ${esc(cv.target_job)}</div>`;
+  if(cv.summary)h+=`<h2>Resumo Profissional</h2><p>${esc(cv.summary)}</p>`;
+  const hasExp=cv.experience.some(e=>e.role||e.company);
+  if(hasExp){
+    h+=`<h2>Experiencia Profissional</h2>`;
+    cv.experience.forEach(exp=>{
+      if(!exp.role&&!exp.company)return;
+      h+=`<div class="exp-item"><div class="role">${esc(exp.role)}</div><div class="meta">${esc(exp.company)}${exp.period?' &bull; '+esc(exp.period):''}</div>`;
+      const resp=(exp.responsibilities||[]).filter(r=>r);
+      const res=(exp.results||[]).filter(r=>r);
+      if(resp.length||res.length){h+='<ul>';resp.forEach(r=>h+=`<li>${esc(r)}</li>`);res.forEach(r=>h+=`<li><strong>${esc(r)}</strong></li>`);h+='</ul>'}
+      h+='</div>';
+    });
+  }
+  const hasEdu=cv.education.some(e=>e.degree||e.institution);
+  if(hasEdu){
+    h+=`<h2>Formacao</h2>`;
+    cv.education.forEach(edu=>{
+      if(!edu.degree&&!edu.institution)return;
+      h+=`<div class="exp-item"><div class="role">${esc(edu.degree)}</div><div class="meta">${esc(edu.institution)}${edu.period?' &bull; '+esc(edu.period):''}</div>`;
+      if(edu.details)h+=`<p>${esc(edu.details)}</p>`;
+      h+='</div>';
+    });
+  }
+  const{tech,pers}=buildPreviewSkills();
+  if(tech.length)h+=`<h2>Competencias Tecnicas</h2><div class="skills-list">${tech.map(s=>'<span>'+esc(s)+'</span>').join('')}</div>`;
+  if(pers.length)h+=`<h2>Competencias Pessoais</h2><div class="skills-list">${pers.map(s=>'<span>'+esc(s)+'</span>').join('')}</div>`;
+  const langs=cv.languages.filter(l=>l.language);
+  if(langs.length){
+    h+=`<h2>Idiomas</h2>`;
+    langs.forEach(l=>{h+=`<div class="lang-item"><span>${esc(l.language)}</span><span>${esc(l.level)}</span></div>`});
+  }
+  const certs=cv.certifications.filter(c=>c.name);
+  if(certs.length){
+    h+=`<h2>Certificacoes</h2>`;
+    certs.forEach(c=>{h+=`<div class="cert-item"><strong>${esc(c.name)}</strong> &mdash; ${esc(c.institution)}${c.year?' ('+esc(c.year)+')':''}${c.validity?' | Validade: '+esc(c.validity):''}${c.credential?' | Nº: '+esc(c.credential):''}</div>`});
+  }
+  const courses=cv.courses.filter(c=>c.name);
+  if(courses.length){
+    h+=`<h2>Cursos Complementares</h2>`;
+    courses.forEach(c=>{h+=`<div class="course-item"><strong>${esc(c.name)}</strong> &mdash; ${esc(c.institution)}${c.period?' &bull; '+esc(c.period):''}</div>`});
+  }
+  const driving=buildDrivingSection();
+  if(driving)h+=`<h2>Carta de Conducao</h2><p>${esc(driving)}</p>`;
+  const avail=buildAvailabilitySection();
+  if(avail)h+=`<h2>Disponibilidade</h2><p>${esc(avail)}</p>`;
+  const auth=buildWorkAuthSection();
+  if(auth)h+=`<h2>Autorizacao de Trabalho</h2><p>${esc(auth)}</p>`;
+  const links=cv.links.filter(l=>l.label||l.url);
+  if(links.length){
+    h+=`<h2>Links</h2>`;
+    links.forEach(l=>{h+=`<div>${esc(l.label||l.url)}: <a href="${esc(l.url)}" style="color:#2563EB">${esc(l.url)}</a></div>`});
+  }
+  return h;
+}
+
+function modernATSTemplate(p){
+  let h='';
+  h+=`<h1 style="font-size:26px;border:none;text-align:center;margin-bottom:8px">${esc(p.name)||'O Seu Nome'}</h1>`;
+  if(p.title)h+=`<div class="subtitle" style="text-align:center;font-size:14px;color:#2563EB;margin-bottom:8px">${esc(p.title)}</div>`;
+  const contacts=[];
+  if(p.email)contacts.push(esc(p.email));
+  if(p.phone)contacts.push(esc(p.phone));
+  if(p.location)contacts.push(esc(p.location));
+  if(p.country)contacts.push(esc(p.country));
+  if(p.nationality)contacts.push(esc(p.nationality));
+  if(p.linkedin)contacts.push(esc(p.linkedin));
+  if(p.portfolio)contacts.push(esc(p.portfolio));
+  if(contacts.length)h+=`<div class="contact" style="justify-content:center;margin-bottom:16px">${contacts.map(c=>'<span>'+c+'</span>').join(' &bull; ')}</div>`;
+  if(cv.target_job)h+=`<div style="text-align:center;background:#EFF6FF;padding:6px;border-radius:4px;font-size:12px;color:#1D4ED8;margin-bottom:12px">Cargo: ${esc(cv.target_job)}</div>`;
+  if(cv.summary)h+=`<h2>Resumo Profissional</h2><p>${esc(cv.summary)}</p>`;
+  const hasExp=cv.experience.some(e=>e.role||e.company);
+  if(hasExp){
+    h+=`<h2>Experiencia</h2>`;
+    cv.experience.forEach(exp=>{
+      if(!exp.role&&!exp.company)return;
+      h+=`<div class="exp-item"><div class="role">${esc(exp.role)}</div><div class="meta">${esc(exp.company)}${exp.period?' &bull; '+esc(exp.period):''}</div>`;
+      const resp=(exp.responsibilities||[]).filter(r=>r);
+      const res=(exp.results||[]).filter(r=>r);
+      if(resp.length||res.length){h+='<ul>';resp.forEach(r=>h+=`<li>${esc(r)}</li>`);res.forEach(r=>h+=`<li><strong>${esc(r)}</strong></li>`);h+='</ul>'}
+      h+='</div>';
+    });
+  }
+  const hasEdu=cv.education.some(e=>e.degree||e.institution);
+  if(hasEdu){
+    h+=`<h2>Formacao</h2>`;
+    cv.education.forEach(edu=>{
+      if(!edu.degree&&!edu.institution)return;
+      h+=`<div class="exp-item"><div class="role">${esc(edu.degree)}</div><div class="meta">${esc(edu.institution)}${edu.period?' &bull; '+esc(edu.period):''}</div>`;
+      if(edu.details)h+=`<p>${esc(edu.details)}</p>`;
+      h+='</div>';
+    });
+  }
+  const{tech,pers}=buildPreviewSkills();
+  if(tech.length)h+=`<h2>Competencias Tecnicas</h2><p>${tech.map(s=>esc(s)).join(' &bull; ')}</p>`;
+  if(pers.length)h+=`<h2>Competencias Pessoais</h2><p>${pers.map(s=>esc(s)).join(' &bull; ')}</p>`;
+  const langs=cv.languages.filter(l=>l.language);
+  if(langs.length)h+=`<h2>Idiomas</h2><p>${langs.map(l=>esc(l.language)+' ('+esc(l.level)+')').join(' &bull; ')}</p>`;
+  const certs=cv.certifications.filter(c=>c.name);
+  if(certs.length){
+    h+=`<h2>Certificacoes</h2>`;
+    certs.forEach(c=>{h+=`<div class="cert-item">${esc(c.name)} &mdash; ${esc(c.institution)}${c.year?' ('+esc(c.year)+')':''}${c.validity?' | Val: '+esc(c.validity):''}</div>`});
+  }
+  const courses=cv.courses.filter(c=>c.name);
+  if(courses.length){h+=`<h2>Cursos</h2>`;courses.forEach(c=>{h+=`<div class="course-item">${esc(c.name)} &mdash; ${esc(c.institution)}${c.period?' &bull; '+esc(c.period):''}</div>`})}
+  const driving=buildDrivingSection();
+  if(driving)h+=`<h2>Carta de Conducao</h2><p>${esc(driving)}</p>`;
+  const avail=buildAvailabilitySection();
+  if(avail)h+=`<h2>Disponibilidade</h2><p>${esc(avail)}</p>`;
+  const auth=buildWorkAuthSection();
+  if(auth)h+=`<h2>Autorizacao</h2><p>${esc(auth)}</p>`;
+  const links=cv.links.filter(l=>l.label||l.url);
+  if(links.length){h+=`<h2>Links</h2>`;links.forEach(l=>{h+=`<div>${esc(l.label||l.url)}: ${esc(l.url)}</div>`})}
+  return h;
+}
+
+function executiveTemplate(p){
+  let h='';
+  h+=`<div style="border-bottom:3px solid #0B1E3C;padding-bottom:12px;margin-bottom:16px">`;
+  h+=`<h1 style="font-size:24px;letter-spacing:1px">${esc(p.name)||'O Seu Nome'}</h1>`;
+  if(p.title)h+=`<div style="font-size:14px;color:#64748B;margin-top:2px">${esc(p.title)}</div>`;
+  const contacts=[];
+  if(p.email)contacts.push(esc(p.email));
+  if(p.phone)contacts.push(esc(p.phone));
+  if(p.location)contacts.push(esc(p.location));
+  if(p.country)contacts.push(esc(p.country));
+  if(p.nationality)contacts.push(esc(p.nationality));
+  if(contacts.length)h+=`<div style="font-size:11px;color:#475569;margin-top:8px">${contacts.join(' &nbsp;&bull;&nbsp; ')}</div>`;
+  if(p.linkedin||p.portfolio){const l2=[];if(p.linkedin)l2.push(esc(p.linkedin));if(p.portfolio)l2.push(esc(p.portfolio));h+=`<div style="font-size:11px;color:#2563EB;margin-top:2px">${l2.join(' &nbsp;&bull;&nbsp; ')}</div>`}
+  h+=`</div>`;
+  if(cv.target_job)h+=`<div style="background:#EFF6FF;padding:6px 12px;border-radius:4px;font-size:12px;color:#1D4ED8;margin-bottom:12px;font-weight:600">Cargo pretendido: ${esc(cv.target_job)}</div>`;
+  if(cv.summary)h+=`<h2>Resumo Executivo</h2><p style="color:#334155">${esc(cv.summary)}</p>`;
+  const hasExp=cv.experience.some(e=>e.role||e.company);
+  if(hasExp){
+    h+=`<h2>Experiencia Executiva</h2>`;
+    cv.experience.forEach(exp=>{
+      if(!exp.role&&!exp.company)return;
+      h+=`<div class="exp-item"><div class="role">${esc(exp.role)}</div><div class="meta" style="color:#2563EB">${esc(exp.company)}${exp.period?' &bull; '+esc(exp.period):''}</div>`;
+      const resp=(exp.responsibilities||[]).filter(r=>r);
+      const res=(exp.results||[]).filter(r=>r);
+      if(resp.length||res.length){h+='<ul>';resp.forEach(r=>h+=`<li>${esc(r)}</li>`);res.forEach(r=>h+=`<li><strong>${esc(r)}</strong></li>`);h+='</ul>'}
+      h+='</div>';
+    });
+  }
+  const hasEdu=cv.education.some(e=>e.degree||e.institution);
+  if(hasEdu){
+    h+=`<h2>Formacao</h2>`;
+    cv.education.forEach(edu=>{
+      if(!edu.degree&&!edu.institution)return;
+      h+=`<div class="exp-item"><div class="role">${esc(edu.degree)}</div><div class="meta">${esc(edu.institution)}${edu.period?' &bull; '+esc(edu.period):''}</div>`;
+      if(edu.details)h+=`<p>${esc(edu.details)}</p>`;
+      h+='</div>';
+    });
+  }
+  const{tech,pers}=buildPreviewSkills();
+  if(tech.length)h+=`<h2>Competencias Tecnicas</h2><div class="skills-list">${tech.map(s=>'<span>'+esc(s)+'</span>').join('')}</div>`;
+  if(pers.length)h+=`<h2>Competencias Pessoais</h2><div class="skills-list">${pers.map(s=>'<span>'+esc(s)+'</span>').join('')}</div>`;
+  const langs=cv.languages.filter(l=>l.language);
+  if(langs.length){
+    h+=`<h2>Idiomas</h2><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>`;
+    langs.forEach(l=>{h+=`<tr><td style="padding:3px 0;font-weight:600">${esc(l.language)}</td><td style="padding:3px 0;color:#64748B">${esc(l.level)}</td></tr>`});
+    h+=`</tbody></table>`;
+  }
+  const certs=cv.certifications.filter(c=>c.name);
+  if(certs.length){h+=`<h2>Certificacoes</h2>`;certs.forEach(c=>{h+=`<div class="cert-item"><strong>${esc(c.name)}</strong> &mdash; ${esc(c.institution)}${c.year?' ('+esc(c.year)+')':''}${c.validity?' | Val: '+esc(c.validity):''}</div>`})}
+  const courses=cv.courses.filter(c=>c.name);
+  if(courses.length){h+=`<h2>Cursos</h2>`;courses.forEach(c=>{h+=`<div class="course-item"><strong>${esc(c.name)}</strong> &mdash; ${esc(c.institution)}${c.period?' &bull; '+esc(c.period):''}</div>`})}
+  const driving=buildDrivingSection();
+  if(driving)h+=`<h2>Carta de Conducao</h2><p>${esc(driving)}</p>`;
+  const avail=buildAvailabilitySection();
+  if(avail)h+=`<h2>Disponibilidade</h2><p>${esc(avail)}</p>`;
+  const auth=buildWorkAuthSection();
+  if(auth)h+=`<h2>Autorizacao de Trabalho</h2><p>${esc(auth)}</p>`;
+  const links=cv.links.filter(l=>l.label||l.url);
+  if(links.length){h+=`<h2>Links</h2>`;links.forEach(l=>{h+=`<div>${esc(l.label||l.url)}: <a href="${esc(l.url)}" style="color:#2563EB">${esc(l.url)}</a></div>`})}
+  return h;
+}
+
+/* ===== UPLOAD / IMPORT ===== */
+function handleDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('dragover');
+  const file=e.dataTransfer.files[0];
+  if(!file)return;
+  processFile(file);
+}
+function uploadFile(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  processFile(file);
+  e.target.value='';
+}
+function processFile(file){
+  const fd=new FormData();
+  fd.append('file',file);
+  showLoading(true);
+  fetch('/api/cv/parse',{method:'POST',body:fd})
+    .then(r=>{if(!r.ok)throw new Error('Erro ao processar arquivo');return r.json()})
+    .then(data=>{
+      showLoading(false);
+      if(data.cv_data){
+        cvOriginal=JSON.parse(JSON.stringify(data.cv_data));
+        mergeImportedData(data.cv_data);
+        renderEditor();
+        renderPreview();
+        toast('Curriculo importado com sucesso!');
+      }else if(data.error){
+        toast(data.error,true);
+      }
+    })
+    .catch(err=>{showLoading(false);toast('Erro ao importar: '+err.message,true)});
+}
+function mergeImportedData(d){
+  if(d.personal)Object.assign(cv.personal,d.personal);
+  if(d.summary)cv.summary=d.summary;
+  if(d.experience&&d.experience.length)cv.experience=d.experience;
+  if(d.education&&d.education.length)cv.education=d.education;
+  if(d.skills_technical)cv.skills_technical=d.skills_technical;
+  else if(d.skills)cv.skills_technical=d.skills;
+  if(d.skills_personal)cv.skills_personal=d.skills_personal;
+  if(d.languages&&d.languages.length)cv.languages=d.languages;
+  if(d.certifications&&d.certifications.length)cv.certifications=d.certifications;
+  if(d.courses&&d.courses.length)cv.courses=d.courses;
+  if(d.links&&d.links.length)cv.links=d.links;
+  if(d.driving_license)cv.driving_license=d.driving_license;
+  if(d.availability)cv.availability=d.availability;
+  if(d.work_authorization)cv.work_authorization=d.work_authorization;
+}
+
+/* ===== AI ===== */
+function runAI(type){
+  document.querySelectorAll('.dropdown-menu').forEach(m=>m.classList.remove('open'));
+  showLoading(true);
+  aiOriginalSnapshot=JSON.parse(JSON.stringify(cv));
+  fetch('/api/cv/enhance',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,type:type,language:cvLanguage,target_job:cv.target_job})
+  })
+  .then(r=>{
+    if(!r.ok)throw new Error('Erro na requisicao');
+    const ct=r.headers.get('content-type')||'';
+    if(ct.includes('text/event-stream')||ct.includes('text/plain')||ct.includes('application/json')){
+      if(ct.includes('application/json'))return r.json().then(d=>({text:JSON.stringify(d),json:true}));
+      return r.text().then(t=>({text:t,json:false}));
+    }
+    return r.text().then(t=>({text:t,json:false}));
+  })
+  .then(data=>{
+    showLoading(false);
+    let text=data.text;
+    if(data.json){try{const p=typeof text==='string'?JSON.parse(text):text;if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();toast('CV atualizado pela IA!');return}}catch(e){}}
+    try{
+      const p=JSON.parse(text);
+      if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();toast('CV atualizado pela IA!');return}
+      if(p.text||p.result||p.content)text=p.text||p.result||p.content;
+    }catch(e){}
+    lastAIResponse=text;
+    lastAIField=type;
+    document.getElementById('aiResultTitle').textContent=getAILabel(type);
+    document.getElementById('aiResultBody').textContent=text;
+    document.getElementById('applyAIResult').style.display='none';
+    document.getElementById('compareBar').style.display=aiOriginalSnapshot?'flex':'none';
+    document.getElementById('aiResultModal').classList.add('open');
+  })
+  .catch(err=>{showLoading(false);toast('Erro IA: '+err.message,true)});
+}
+
+function runSectionAI(type){
+  aiOriginalSnapshot=JSON.parse(JSON.stringify(cv));
+  showLoading(true);
+  fetch('/api/cv/enhance',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,type:type,language:cvLanguage,target_job:cv.target_job})
+  })
+  .then(r=>{
+    if(!r.ok)throw new Error('Erro');
+    const ct=r.headers.get('content-type')||'';
+    if(ct.includes('application/json'))return r.json().then(d=>({text:JSON.stringify(d),json:true}));
+    return r.text().then(t=>({text:t,json:false}));
+  })
+  .then(data=>{
+    showLoading(false);
+    let text=data.text;
+    try{
+      const p=JSON.parse(text);
+      if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();toast('Secao atualizada!');return}
+      if(p.text||p.result||p.content)text=p.text||p.result||p.content;
+    }catch(e){}
+    lastAIResponse=text;
+    lastAIField=type;
+    document.getElementById('aiResultTitle').textContent=getAILabel(type);
+    document.getElementById('aiResultBody').textContent=text;
+    document.getElementById('applyAIResult').style.display='none';
+    document.getElementById('compareBar').style.display=aiOriginalSnapshot?'flex':'none';
+    document.getElementById('aiResultModal').classList.add('open');
+  })
+  .catch(err=>{showLoading(false);toast('Erro: '+err.message,true)});
+}
+
+function getAILabel(type){
+  const labels={
+    improve_summary:'Melhorar Resumo',improve_experience:'Melhorar Experiencia',
+    fix_grammar:'Corrigir Gramatica',make_professional:'Tornar Profissional',
+    optimize_ats:'Otimizar ATS',adapt_pt:'Adaptar para Portugal',
+    summarize:'Resumir',expand:'Expandir',improve_all:'Melhorar Tudo',
+    personal:'Melhorar Dados Pessoais',professional:'Tornar Profissional'
+  };
+  return labels[type]||'Resultado IA';
+}
+
+function showCompare(which,btn){
+  document.querySelectorAll('.compare-bar button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(which==='old'&&aiOriginalSnapshot){
+    document.getElementById('aiResultBody').textContent=JSON.stringify(aiOriginalSnapshot,null,2);
+  }else{
+    document.getElementById('aiResultBody').textContent=lastAIResponse||'';
+  }
+}
+
+function applyAIResult(){
+  if(!lastAIResponse)return;
+  try{
+    const p=JSON.parse(lastAIResponse);
+    if(p.cv_data){Object.assign(cv,p.cv_data)}
+    else{Object.assign(cv,p)}
+  }catch(e){cv.summary=lastAIResponse}
+  renderEditor();renderPreview();
+  closeAIResultModal();
+  toast('Resultado aplicado!');
+}
+function closeAIResultModal(){document.getElementById('aiResultModal').classList.remove('open');document.getElementById('compareBar').style.display='none'}
+
+/* ===== TRANSLATION ===== */
+function runTranslate(lang){
+  showLoading(true);
+  aiOriginalSnapshot=JSON.parse(JSON.stringify(cv));
+  fetch('/api/cv/translate',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,target:lang,source_language:cvLanguage})
+  })
+  .then(r=>{if(!r.ok)throw new Error('Erro na traducao');return r.text()})
+  .then(text=>{
+    showLoading(false);
+    try{
+      const p=JSON.parse(text);
+      if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();toast('CV traduzido!');return}
+    }catch(e){}
+    lastAIResponse=text;
+    document.getElementById('aiResultTitle').textContent='Traducao - '+lang.toUpperCase();
+    document.getElementById('aiResultBody').textContent=text;
+    document.getElementById('applyAIResult').style.display='none';
+    document.getElementById('compareBar').style.display='none';
+    document.getElementById('aiResultModal').classList.add('open');
+  })
+  .catch(err=>{showLoading(false);toast('Erro na traducao: '+err.message,true)});
+}
+
+/* ===== JOB ADAPTATION ===== */
+function openAdaptModal(){
+  document.getElementById('adaptJobTitle').value=cv.target_job||'';
+  document.getElementById('adaptJD').value='';
+  document.getElementById('adaptURL').value='';
+  document.getElementById('adaptResult').style.display='none';
+  document.getElementById('adaptResult').textContent='';
+  document.getElementById('adaptModal').classList.add('open');
+}
+function closeAdaptModal(){document.getElementById('adaptModal').classList.remove('open')}
+
+function adaptForTargetJob(){
+  if(!cv.target_job){toast('Insira o cargo desejado primeiro',true);return}
+  showLoading(true);
+  aiOriginalSnapshot=JSON.parse(JSON.stringify(cv));
+  fetch('/api/cv/adapt',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,job_title:cv.target_job,language:cvLanguage})
+  })
+  .then(r=>{if(!r.ok)throw new Error('Erro');return r.text()})
+  .then(text=>{
+    showLoading(false);
+    try{
+      const p=JSON.parse(text);
+      if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();toast('CV adaptado para: '+cv.target_job);return}
+    }catch(e){}
+    lastAIResponse=text;
+    document.getElementById('aiResultTitle').textContent='Adaptacao - '+cv.target_job;
+    document.getElementById('aiResultBody').textContent=text;
+    document.getElementById('applyAIResult').style.display='none';
+    document.getElementById('compareBar').style.display='none';
+    document.getElementById('aiResultModal').classList.add('open');
+  })
+  .catch(err=>{showLoading(false);toast('Erro: '+err.message,true)});
+}
+
+function runAdapt(){
+  const jd=document.getElementById('adaptJD').value.trim();
+  const url=document.getElementById('adaptURL').value.trim();
+  const jobTitle=document.getElementById('adaptJobTitle').value.trim();
+  if(jobTitle)cv.target_job=jobTitle;
+  if(!jd&&!url&&!jobTitle){toast('Insira o cargo, descricao ou URL da vaga',true);return}
+  const btn=document.getElementById('adaptBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Adaptando...';
+  const resultEl=document.getElementById('adaptResult');
+  resultEl.style.display='block';
+  resultEl.textContent='Processando...';
+  aiOriginalSnapshot=JSON.parse(JSON.stringify(cv));
+  fetch('/api/cv/adapt',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,job_description:jd,job_url:url||undefined,job_title:jobTitle,language:cvLanguage})
+  })
+  .then(r=>{if(!r.ok)throw new Error('Erro na adaptacao');return r.text()})
+  .then(text=>{
+    btn.disabled=false;
+    btn.textContent='Adaptar Curriculo';
+    try{
+      const p=JSON.parse(text);
+      if(p.cv_data){Object.assign(cv,p.cv_data);renderEditor();renderPreview();resultEl.textContent='CV adaptado com sucesso!';toast('CV adaptado!');setTimeout(()=>closeAdaptModal(),1500);return}
+      if(p.text||p.result||p.content){resultEl.textContent=p.text||p.result||p.content;lastAIResponse=text;document.getElementById('applyAIResult').style.display='inline-flex';return}
+    }catch(e){}
+    resultEl.textContent=text;
+    lastAIResponse=text;
+  })
+  .catch(err=>{btn.disabled=false;btn.textContent='Adaptar Curriculo';resultEl.textContent='Erro: '+err.message;toast('Erro: '+err.message,true)});
+}
+
+/* ===== EXPORT ===== */
+function exportPDF(){
+  const name=cv.personal.name||'CV';
+  const el=document.getElementById('cvPreview');
+  const opt={
+    margin:[10,10,10,10],filename:name+'-CV.pdf',
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2,useCORS:true,letterRendering:true},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  };
+  showLoading(true);
+  html2pdf().set(opt).from(el).save().then(()=>{showLoading(false);toast('PDF exportado!')}).catch(err=>{showLoading(false);toast('Erro PDF: '+err.message,true)});
+}
+function exportDOCX(){
+  const name=cv.personal.name||'CV';
+  showLoading(true);
+  fetch('/api/cv/export-docx',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({cv_data:cv,template:currentTemplate,language:cvLanguage})
+  })
+  .then(r=>{if(!r.ok)throw new Error('Erro ao exportar DOCX');return r.blob()})
+  .then(blob=>{
+    showLoading(false);
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=name+'-CV.docx';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+    toast('DOCX exportado!');
+  })
+  .catch(err=>{showLoading(false);toast('Erro DOCX: '+err.message,true)});
+}
+
+/* ===== INIT ===== */
+renderEditor();
+renderPreview();
+</script>
+</body>
+</html>
